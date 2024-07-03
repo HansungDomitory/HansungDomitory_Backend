@@ -8,3 +8,14 @@ export interface IStudentServiceCreate {
 export interface IStudentServiceUpdate {
     updateStudentInput: UpdateStudentInput;
 }
+
+export interface IContext {
+    req: Request & IStudentContext;
+    res: Response;
+}
+
+export interface IStudentContext {
+    student: {
+        id: string;
+    };
+}
