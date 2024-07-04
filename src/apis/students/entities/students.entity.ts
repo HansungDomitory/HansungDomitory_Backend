@@ -12,10 +12,10 @@ export class Student {
     @Column()
     password: string;
 
-    @Column()
+    @Column({default: 0})
     merit_score: number;
 
-    @Column()
+    @Column({default: 0})
     demerit_score: number;
 
     @CreateDateColumn()

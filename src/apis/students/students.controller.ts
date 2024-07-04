@@ -1,11 +1,11 @@
 import { BadRequestException, Body, Controller, Delete, ForbiddenException, Get, Param, Patch, Post, Req, Res, UnprocessableEntityException, UseGuards } from "@nestjs/common";
 import { StudentService } from "./students.service";
 import { CreateStudentInput } from "./dto/create-student.input";
-import { JwtAuthGuard } from "./guards/rest-auth.guard";
 import { UpdateStudentInput } from "./dto/update-student.input";
 import * as bcrypt from 'bcrypt';
 import { Response } from "express";
 import { RequestWithStudent } from "./interfaces/student-service.interface";
+import { AccessGuard } from "./guards/rest-auth.guard";
 
 @Controller('students')
 export class StudentController {
@@ -25,13 +25,13 @@ export class StudentController {
         return this.studentService.findById(id);
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(AccessGuard)
     @Get('me')
     async whoAmI(@Req() req: RequestWithStudent) {
         return this.studentService.findById(req.student.id);
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(AccessGuard)
     @Patch(':id')
     async updateStudent(
         @Param('id') id: string,
@@ -48,7 +48,7 @@ export class StudentController {
         return result;
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(AccessGuard)
     @Delete(':id')
     async deleteStudent(@Param('id') id: string, @Req() req: RequestWithStudent) {
         if(req.student.id !== id) {
@@ -61,21 +61,22 @@ export class StudentController {
     async login(
         @Body('id') id: string,
         @Body('password') password: string,
-        @Res() res: Response
+        @Res() res: Response,
     ) {
         const student = await this.studentService.findById(id);
-        if(!student) {
+        if (!student) {
             throw new UnprocessableEntityException('해당 학번을 가진 학생이 존재하지 않습니다.');
         }
 
         const isAuth = await bcrypt.compare(password, student.password);
-        if(!isAuth) {
+        if (!isAuth) {
             throw new UnprocessableEntityException('비밀번호가 틀렸습니다.');
         }
 
         const accessToken = this.studentService.getAccessToken(student);
-        this.studentService.getRefreshToken(student, { res } as any);
-        res.json({ accessToken });
+        this.studentService.getRefreshToken(student, { req: null, res });
+
+        return res.json({ accessToken });
     }
 
     @Post('logout')
@@ -86,7 +87,7 @@ export class StudentController {
         res.json({ success: true });
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(AccessGuard)
     @Post('restore-access-token')
     async restoreAccessToken(@Req() req: RequestWithStudent) {
         return this.studentService.getRestoreToken({ id: req.student.id });
