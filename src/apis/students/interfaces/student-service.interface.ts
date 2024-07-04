@@ -1,5 +1,6 @@
 import { CreateStudentInput } from "../dto/create-student.input";
 import { UpdateStudentInput } from "../dto/update-student.input";
+import { Request, Response } from 'express';
 
 export interface IStudentServiceCreate {
     createStudentInput: CreateStudentInput;
@@ -10,11 +11,17 @@ export interface IStudentServiceUpdate {
 }
 
 export interface IContext {
-    req: Request & IStudentContext;
+    req: Request;
     res: Response;
 }
 
 export interface IStudentContext {
+    student: {
+        id: string;
+    };
+}
+
+export interface RequestWithStudent extends Request {
     student: {
         id: string;
     };

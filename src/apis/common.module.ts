@@ -18,7 +18,12 @@ import { JwtModule } from "@nestjs/jwt";
             ScoreRecord,
             ApplyOut
         ]),
-        JwtModule.register({}),
+        JwtModule.register({
+            secret: process.env.JWT_SECRET || 'defaultSecret',
+            signOptions: {
+                expiresIn: '1d',
+            },
+        }),
     ],
     providers: [
         ApplyOutService,
@@ -30,7 +35,8 @@ import { JwtModule } from "@nestjs/jwt";
         ApplyOutService,
         NoticeService,
         ScoreRecordService,
-        StudentService
+        StudentService,
+        JwtModule,
     ]
 })
 export class CommonModule {}

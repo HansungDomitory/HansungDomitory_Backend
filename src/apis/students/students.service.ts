@@ -4,6 +4,7 @@ import { Student } from "./entities/students.entity";
 import { Repository } from "typeorm";
 import { JwtService } from "@nestjs/jwt";
 import { IContext, IStudentContext, IStudentServiceCreate, IStudentServiceUpdate } from "./interfaces/student-service.interface";
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class StudentService {
@@ -22,7 +23,7 @@ export class StudentService {
 
         const { password, ...rest} = createStudentInput;
         const hashedPassword = await bcrypt.hash(password, 10);
-        const student = await this.studentRepository.save({
+        return this.studentRepository.save({
             password: hashedPassword,
             ...rest,
         });
@@ -44,6 +45,7 @@ export class StudentService {
         }
 
         if(result.affected > 0) {
+            await this.studentRepository.update(student_id, rest);
             return await this.findById(student_id);
         }
         else {
@@ -54,7 +56,7 @@ export class StudentService {
     //회원 정보 삭제
     async delete(student_id: string): Promise<boolean> {
         const student = await this.findById(student_id);
-        if(student_id !== student_id) {
+        if(student_id !== student.id) {
             throw new ForbiddenException(
                 '현재 로그인 된 계정으로만 삭제할 수 있습니다.'
             );
@@ -99,7 +101,5 @@ export class StudentService {
     //JWT Token 재발급
     getRestoreToken(student: IStudentContext['student']): string {
         return this.getAccessToken(student);
-    }
-
-    
+    }    
 }

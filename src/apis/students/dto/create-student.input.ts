@@ -2,7 +2,7 @@ import { Column } from "typeorm";
 
 export class CreateStudentInput {
     @Column()
-    id?: string;
+    id: string;
 
     @Column()
     name: string;

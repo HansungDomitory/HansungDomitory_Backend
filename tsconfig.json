@@ -6,7 +6,11 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2021",
+    //"target": "ES2021",
+    "target": "ES6",
+    "strict": true,
+    "esModuleInterop": true,
+    //esModuleInterop까지 새로 추가
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
@@ -15,7 +19,11 @@
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
+    //"forceConsistentCasingInFileNames": false,
+    "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": false
-  }
+  },
+  //새로 추가
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }
