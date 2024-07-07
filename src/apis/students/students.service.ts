@@ -34,23 +34,14 @@ export class StudentService {
         student_id: string,
         { updateStudentInput }: IStudentServiceUpdate,
     ): Promise<Student> {
-        let result = null;
-        const student = await this.findById(student_id);
-        const { ...rest } = updateStudentInput;
-
         //비밀번호 hash
-        if(rest.password) {
-            const hashedPassword = await bcrypt.hash(rest.password, 10);
-            rest.password = hashedPassword;
+        if(updateStudentInput.password) {
+            const hashedPassword = await bcrypt.hash(updateStudentInput.password, 10);
+            updateStudentInput.password = hashedPassword;
         }
 
-        if(result.affected > 0) {
-            await this.studentRepository.update(student_id, rest);
-            return await this.findById(student_id);
-        }
-        else {
-            return null;
-        }
+        await this.studentRepository.update(student_id, updateStudentInput);
+        return await this.findById(student_id);
     }
 
     //회원 정보 삭제

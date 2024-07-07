@@ -7,37 +7,38 @@ import { Response } from "express";
 import { RequestWithStudent } from "./interfaces/student-service.interface";
 import { AccessGuard } from "./guards/rest-auth.guard";
 
-@Controller('students')
+@Controller('student')
 export class StudentController {
     constructor(private readonly studentService: StudentService) {}
 
-    @Post()
+    @Post() //post: 데이터 추가
     async signUp(@Body() createStudentInput: CreateStudentInput) {
         return this.studentService.create({createStudentInput});
     }
 
-    @Get()
+    @Get() //get: 데이터 조회
     async fetchAllStudents() {
         return this.studentService.findAll();
     }
+
+    @UseGuards(AccessGuard)
+    @Get('me')
+    async whoAmI(@Req() req: RequestWithStudent) {
+        return this.studentService.findById(req.user.id);
+    }
+
     @Get(':id')
     async fetchStudentById(@Param('id') id: string) {
         return this.studentService.findById(id);
     }
 
     @UseGuards(AccessGuard)
-    @Get('me')
-    async whoAmI(@Req() req: RequestWithStudent) {
-        return this.studentService.findById(req.student.id);
-    }
-
-    @UseGuards(AccessGuard)
-    @Patch(':id')
+    @Patch() //patch: 데이터 수정
     async updateStudent(
-        @Param('id') id: string,
+        @Req() req: RequestWithStudent,
         @Body() updateStudentInput: UpdateStudentInput
     ) {
-        const result = await this.studentService.update(id, { 
+        const result = await this.studentService.update(req.user.id, { 
             updateStudentInput,
         });
         if(!result) {
@@ -49,12 +50,9 @@ export class StudentController {
     }
 
     @UseGuards(AccessGuard)
-    @Delete(':id')
-    async deleteStudent(@Param('id') id: string, @Req() req: RequestWithStudent) {
-        if(req.student.id !== id) {
-            throw new ForbiddenException('현재 로그인 된 계정으로만 삭제할 수 있습니다.');
-        }
-        return this.studentService.delete(id);
+    @Delete() //delete: 삭제
+    async deleteStudent(@Req() req: RequestWithStudent) {
+        return this.studentService.delete(req.user.id);
     }
 
     @Post('login')
@@ -88,8 +86,8 @@ export class StudentController {
     }
 
     @UseGuards(AccessGuard)
-    @Post('restore-access-token')
+    @Post('refreshToken')
     async restoreAccessToken(@Req() req: RequestWithStudent) {
-        return this.studentService.getRestoreToken({ id: req.student.id });
+        return this.studentService.getRestoreToken({ id: req.user.id });
     }
 }

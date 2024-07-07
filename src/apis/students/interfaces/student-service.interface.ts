@@ -22,7 +22,7 @@ export interface IStudentContext {
 }
 
 export interface RequestWithStudent extends Request {
-    student: {
+    user: {
         id: string;
     };
 }
