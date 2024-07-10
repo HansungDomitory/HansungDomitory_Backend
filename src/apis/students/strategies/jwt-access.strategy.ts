@@ -5,7 +5,7 @@ export default class AccessStrategy extends PassportStrategy(Strategy, 'heoga') 
   constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: 'access_test',
+      secretOrKey: process.env.JWT_ACCESS_SECRET,
     });
   }
 

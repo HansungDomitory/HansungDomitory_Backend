@@ -72,7 +72,7 @@ export class StudentService {
     getAccessToken(student: Student | IStudentContext['student']): string {
         return this.jwtService.sign(
             { sub: student.id },
-            { secret: 'access_test', expiresIn: '10m' }
+            { secret: process.env.JWT_ACCESS_SECRET, expiresIn: '10m' }
         );
     }
 
@@ -80,7 +80,7 @@ export class StudentService {
     getRefreshToken(student: Student, context: IContext): void {
         const refreshToken = this.jwtService.sign(
             { sub: student.id },
-            { secret: 'refresh_test', expiresIn: '2w' },
+            { secret: process.env.JWT_REFRESH_SECRET, expiresIn: '2w' },
         );
 
         context.res.setHeader(

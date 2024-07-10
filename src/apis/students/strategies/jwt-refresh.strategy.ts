@@ -19,7 +19,7 @@ export class RefreshStrategy extends PassportStrategy(Strategy, 'jaeheoga') {
         }
         return refreshToken;
       },
-      secretOrKey: 'refresh_test',
+      secretOrKey: process.env.JWT_REFRESH_SECRET,
     });
   }
 
