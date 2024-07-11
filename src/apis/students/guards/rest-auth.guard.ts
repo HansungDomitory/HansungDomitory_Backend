@@ -7,7 +7,7 @@ export class AccessGuard extends AuthGuard('heoga') {
   }
 }
 
-export class AuthRefreshGuard extends AuthGuard('jaeheoga') {
+export class RefreshGuard extends AuthGuard('jaeheoga') {
   getRequest(context: ExecutionContext) {
     return context.switchToHttp().getRequest();
   }
