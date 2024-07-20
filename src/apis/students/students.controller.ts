@@ -6,7 +6,7 @@ import * as bcrypt from 'bcrypt';
 import { Response } from "express";
 import { RequestWithStudent } from "./interfaces/student-service.interface";
 import { AccessGuard, RefreshGuard } from "./guards/rest-auth.guard";
-import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiProperty, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiProperty, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Student } from "./entities/students.entity";
 import { LoginStudentInput } from "./dto/login-student.input";
 
@@ -19,7 +19,7 @@ export class StudentController {
     @ApiCreatedResponse({ description: '사용자 생성에 성공', type: Student })
     @Post('student') //post: 데이터 추가
     async signUp(@Body() createStudentInput: CreateStudentInput) {
-        return this.studentService.create({createStudentInput});
+        return await this.studentService.create({createStudentInput});
     }
 
     @ApiTags('학생')
@@ -27,16 +27,17 @@ export class StudentController {
     @ApiOkResponse({ description: '조회 성공', type: [Student] })
     @Get('student') //get: 데이터 조회
     async fetchAllStudents() {
-        return this.studentService.findAll();
+        return await this.studentService.findAll();
     }
 
     @ApiTags('학생')
     @ApiOperation({ summary: '본인 정보 조회', description: '현재 로그인 된 학생의 정보를 조회합니다.'} )
     @ApiOkResponse({ description: '조회 성공', type: Student })
+    @ApiBearerAuth()
     @UseGuards(AccessGuard)
     @Get('student/me')
     async whoAmI(@Req() req: RequestWithStudent) {
-        return this.studentService.findById(req.user.id);
+        return await this.studentService.findById(req.user.id);
     }
 
     @ApiTags('학생')
@@ -44,13 +45,14 @@ export class StudentController {
     @ApiOkResponse({ description: '조회 성공', type: Student })
     @Get('student/:id')
     async fetchStudentById(@Param('id') id: string) {
-        return this.studentService.findById(id);
+        return await this.studentService.findById(id);
     }
 
     @ApiTags('학생')
     @ApiOperation({ summary: '학생 정보 수정', description: '현재 로그인 된 사용자의 정보를 수정합니다.' })
     @ApiOkResponse({ description: '수정 성공', type: Student })
     @ApiResponse({status: '4XX', description: '수정 실패', example: '알 수 없는 이유로 학생 정보 수정에 실패하였습니다.' })
+    @ApiBearerAuth()
     @UseGuards(AccessGuard)
     @Patch('student') //patch: 데이터 수정
     async updateStudent(
@@ -71,15 +73,16 @@ export class StudentController {
     @ApiTags('학생')
     @ApiOperation({ summary: "회원탈퇴", description: "현재 로그인 된 학생의 계정이 탈퇴됩니다." })
     @ApiOkResponse({ description: "탈퇴 성공", example: true })
+    @ApiBearerAuth()
     @UseGuards(AccessGuard)
     @Delete('student') //delete: 삭제
     async deleteStudent(@Req() req: RequestWithStudent) {
-        return this.studentService.delete(req.user.id);
+        return await this.studentService.delete(req.user.id);
     }
 
     @ApiTags('로그인')
     @ApiOperation({ summary: "로그인", description: "학번과 비밀번호를 입력받아 JWT 토큰을 받습니다." })
-    @ApiOkResponse({ description: '로그인 성공', example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'})
+    @ApiCreatedResponse({ description: '로그인 성공', example: 'JWT 토큰값'})
     @Post('login')
     async login(
         @Body() loginStudentInput: LoginStudentInput,
@@ -103,7 +106,7 @@ export class StudentController {
 
     @ApiTags('로그인')
     @ApiOperation({ summary: '로그아웃', description: 'Cookie에 저장된 Restore 토큰을 삭제합니다.' })
-    @ApiOkResponse({ description: '로그아웃 성공'})
+    @ApiCreatedResponse({ description: '로그아웃 성공'})
     @Post('logout')
     async logout(@Res() res: Response) {
         res.setHeader('Set-Cookie', [
@@ -114,7 +117,7 @@ export class StudentController {
 
     @ApiTags('로그인')
     @ApiOperation({ summary: '재로그인', description: '로그인하여 생성된 JWT 토큰이 만료되었을 때, Cookie에 저장된 restore token을 이용하여 다시 JWT 토큰을 받아옵니다.' })
-    @ApiOkResponse({ description: '재로그인 성공', example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' })
+    @ApiCreatedResponse({ description: '재로그인 성공', example: 'JWT 토큰값' })
     @UseGuards(RefreshGuard)
     @Post('restoreToken')
     async restoreAccessToken(@Req() req: RequestWithStudent) {

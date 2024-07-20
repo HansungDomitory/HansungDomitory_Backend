@@ -1,27 +1,29 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Student } from "src/apis/students/entities/students.entity";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class ApplyOut {
 
     @ApiProperty({ description: "고유번호" })
     @PrimaryGeneratedColumn('increment')
-    id: string;
+    id: number;
 
-    @ApiProperty({ description: "외박 신청 학생 학번" })
-    @Column()
-    student_id: string;
+    @ApiProperty({ description: "외박 신청 학생" })
+    @ManyToOne(() => Student, { onDelete: 'CASCADE' })
+    @JoinColumn()
+    student: Student;
 
     @ApiProperty({ description: "외박일수" })
     @Column()
     duration: number;
 
     @ApiProperty({ description: "시작 날짜" })
-    @Column()
+    @Column({ type: 'date' })
     start_date: Date;
 
     @ApiProperty({ description: "종료 날짜" })
-    @Column()
+    @Column({ type: 'date' })
     end_date: Date;
 
     @ApiProperty({ description: "내용" })

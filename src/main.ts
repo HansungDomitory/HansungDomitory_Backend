@@ -9,6 +9,7 @@ async function bootstrap() {
     .setTitle('백엔드 API 정의서')
     .setDescription('한성대학교 외박 신청 어플리케이션 프로젝트 API')
     .setVersion('1.0.0')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, options);

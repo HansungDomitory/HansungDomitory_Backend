@@ -7,6 +7,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Notice } from './apis/notice/entities/notice.entity';
 import { Student } from './apis/students/entities/students.entity';
 import { ConfigModule } from '@nestjs/config';
+import { ApplyOut } from './apis/applyOut/entities/applyOut.entity';
+import { ScoreRecord } from './apis/scoreRecords/entities/scoreRecords.entity';
 
 @Module({
   imports: [
@@ -22,7 +24,7 @@ import { ConfigModule } from '@nestjs/config';
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_DATABASE,
-      entities: [Notice, Student],
+      entities: [Notice, Student, ApplyOut, ScoreRecord],
       synchronize: true,
       logging: true,
     }),

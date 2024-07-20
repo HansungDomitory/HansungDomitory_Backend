@@ -72,7 +72,7 @@ export class StudentService {
     getAccessToken(student: Student | IStudentContext['student']): string {
         return this.jwtService.sign(
             { sub: student.id },
-            { secret: process.env.JWT_ACCESS_SECRET, expiresIn: '10m' }
+            { secret: process.env.JWT_ACCESS_SECRET, expiresIn: '100m' }
         );
     }
 
