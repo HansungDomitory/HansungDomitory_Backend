@@ -93,6 +93,7 @@ export class StudentController {
             throw new UnprocessableEntityException('해당 학번을 가진 학생이 존재하지 않습니다.');
         }
 
+        console.log(loginStudentInput)
         const isAuth = await bcrypt.compare(loginStudentInput.password, student.password);
         if (!isAuth) {
             throw new UnprocessableEntityException('비밀번호가 틀렸습니다.');
