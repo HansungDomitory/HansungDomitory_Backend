@@ -4,7 +4,7 @@ import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
 @Entity()
 export class Student {
 
-    @ApiProperty({ description: "학번" })
+    @ApiProperty({ description: "학번", minLength: 7, maxLength: 7 })
     @PrimaryColumn('varchar', { length: 7 })
     id: string;
 
@@ -23,6 +23,10 @@ export class Student {
     @ApiProperty({ description: "벌점" })
     @Column({default: 0})
     demerit_score: number;
+
+    @ApiProperty({ description: "호실" })
+    @Column({ nullable: true, length: 5 })
+    room: string;
 
     @ApiProperty({ description: "가입일자" })
     @CreateDateColumn()

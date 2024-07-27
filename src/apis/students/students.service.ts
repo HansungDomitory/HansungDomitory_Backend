@@ -21,10 +21,17 @@ export class StudentService {
             throw new BadRequestException('이미 가입된 사용자입니다.');
         }
 
+        if(createStudentInput.id === '0000000') {
+            throw new BadRequestException('회원가입할 수 없는 ID입니다.');
+        }
+
         const { password, ...rest} = createStudentInput;
         const hashedPassword = await bcrypt.hash(password, 10);
+        const room = await this.assignRandomRoom();
+
         return this.studentRepository.save({
             password: hashedPassword,
+            room,
             ...rest,
         });
     }
@@ -92,5 +99,50 @@ export class StudentService {
     //JWT Token 재발급
     getRestoreToken(student: IStudentContext['student']): string {
         return this.getAccessToken(student);
-    }    
+    }
+
+    async addScore(student_id: string, isMeritScore: boolean, score: number) {
+        const student = await this.studentRepository.findOne({ where: { id: student_id } });
+        const nowMeritScore = student.merit_score;
+        const nowDemeritScore = student.demerit_score;
+
+        if (isMeritScore) {
+            await this.studentRepository.update(
+                { id: student_id },
+                { merit_score:  nowMeritScore + score }
+            )
+        } else {
+            await this.studentRepository.update(
+                { id: student_id },
+                { demerit_score: nowDemeritScore + score }
+            )
+        }
+        return await this.findById(student_id);
+    }
+
+    // 사용되지 않은 랜덤 방 번호 배정
+    private async assignRandomRoom(): Promise<string> {
+        const existingRooms = await this.studentRepository.find({ select: ['room'] });
+        const existingRoomSet = new Set(existingRooms.map(student => student.room));
+
+        while (true) {
+            const randomRoom = this.generateRandomRoom();
+            if (!existingRoomSet.has(randomRoom)) {
+                return randomRoom;
+            }
+        }
+    }
+
+    // 랜덤 방 번호 생성
+    private generateRandomRoom(): string {
+        const floor = this.getRandomInt(1, 9);
+        const roomSuffix = this.getRandomInt(1, 9);
+        const tailDasi = this.getRandomInt(1, 2);
+        return `${floor}0${roomSuffix}-${tailDasi}`;
+    }
+
+    // 최소값과 최대값 사이의 랜덤 정수 생성
+    private getRandomInt(min: number, max: number): number {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 }

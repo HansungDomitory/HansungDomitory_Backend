@@ -114,7 +114,7 @@ export class ApplyOutService {
     private calculateDuration(start_date: Date, end_date: Date): number {
         const start = new Date(start_date);
         const end = new Date(end_date);
-        const duration = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24) + 1;
+        const duration = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
         return Math.max(duration, 0); //음수가 되지 않도록..
     }
 }

@@ -6,7 +6,7 @@ export class CreateScoreRecordInput {
     @Column()
     student_id: string;
 
-    @ApiProperty({ description: '상벌점여부', example: 'true: 상점, false: 벌점' })
+    @ApiProperty({ description: '상벌점여부', example: true })
     @Column()
     is_merit: boolean;
 

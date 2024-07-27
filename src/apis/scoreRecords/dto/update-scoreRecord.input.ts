@@ -2,11 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Column } from "typeorm";
 
 export class UpdateScoreRecordInput {
-    @ApiProperty({ description: '고유번호', example: '12' })
-    @Column()
-    id: number;
-
-    @ApiProperty({ description: '상벌점여부', example: 'true: 상점, false: 벌점' })
+    @ApiProperty({ description: '상벌점여부', example: false })
     @Column()
     is_merit: boolean;
 
