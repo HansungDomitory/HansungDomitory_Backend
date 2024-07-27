@@ -25,7 +25,7 @@ export class Student {
     demerit_score: number;
 
     @ApiProperty({ description: "호실" })
-    @Column({ nullable: true, length: 5 })
+    @Column({ length: 5 })
     room: string;
 
     @ApiProperty({ description: "가입일자" })
