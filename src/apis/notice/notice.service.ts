@@ -21,7 +21,8 @@ export class NoticeService {
 
     async findAll(): Promise<Notice[]> {
         return await this.noticeRepository.find({
-            order: { create_at: 'DESC' }
+            order: { create_at: 'DESC' },
+            relations: ['student']
         });
     }
 
@@ -54,7 +55,8 @@ export class NoticeService {
                 { title: ILike(`%${Keyword}%`) },
                 { detail: ILike(`%${Keyword}%`) }
             ],
-            order: { create_at: 'DESC' }
+            order: { create_at: 'DESC' },
+            relations: ['student']
         });
     }
 }
