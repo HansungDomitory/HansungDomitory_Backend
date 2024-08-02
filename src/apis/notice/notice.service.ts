@@ -12,7 +12,7 @@ export class NoticeService {
     ) {}
 
     async create(myId: string, createNoticeInput: CreateNoticeInput): Promise<Notice> {
-        if(myId !== '0000000') {
+        if(!myId && myId !== '0000000') {
             throw new ForbiddenException('관리자만 공지사항을 생성할 수 있습니다.');
         }
         const notice = this.noticeRepository.create({ ...createNoticeInput});
@@ -33,7 +33,7 @@ export class NoticeService {
     }
 
     async update(myId: string, id: number, updateNoticeInput: UpdateNoticeInput): Promise<Notice> {
-        if(myId !== '0000000') {
+        if(!myId && myId !== '0000000') {
             throw new ForbiddenException('관리자만 공지사항을 수정할 수 있습니다.');
         }
         await this.noticeRepository.update({ id }, { ...updateNoticeInput });
