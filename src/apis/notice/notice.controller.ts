@@ -21,6 +21,13 @@ export class NoticeController {
         return await this.noticeService.create(req.user.id, createNoticeInput);
     }
 
+    @ApiOperation({ summary: '공지사항 검색', description: '특정된 키워드를 포함하는 공지사항을 검색합니다.' })
+    @ApiOkResponse({ description: '검색 성공', type: [Notice] })
+    @Get('search')
+    async searchNotices(@Query('Keyword') Keyword: string) {
+        return await this.noticeService.search(Keyword);
+    }
+
     @ApiOperation({ summary: '공지사항 조회', description: '모든 공지사항을 조회합니다.' })
     @ApiOkResponse({ description: '조회 성공', type: [Notice] })
     @Get()
@@ -51,12 +58,5 @@ export class NoticeController {
     @Delete(':id')
     async deleteNotice(@Req() req: RequestWithStudent, @Param('id') id: number) {
         return await this.noticeService.delete(req.user.id, id);
-    }
-
-    @ApiOperation({ summary: '공지사항 검색', description: '특정된 키워드를 포함하는 공지사항을 검색합니다.' })
-    @ApiOkResponse({ description: '검색 성공', type: [Notice] })
-    @Get('search')
-    async searchNotices(@Query('Keyword') Keyword: string) {
-        return await this.noticeService.search(Keyword);
     }
 }

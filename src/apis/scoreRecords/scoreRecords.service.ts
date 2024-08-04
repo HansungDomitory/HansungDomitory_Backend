@@ -14,7 +14,7 @@ export class ScoreRecordService {
     ) {}
 
     async create(myId: string, createScoreRecordInput: CreateScoreRecordInput) {
-        if(!myId && myId !== '0000000') {
+        if(!myId || myId !== '0000000') {
             throw new ForbiddenException('관리자만 상벌점 기록을 생성할 수 있습니다.');
         }
 
@@ -60,7 +60,7 @@ export class ScoreRecordService {
     }
 
     async update(myId: string, id: number, updateScoreRecordInput: UpdateScoreRecordInput) {
-        if(!myId && myId !== '0000000') {
+        if(!myId || myId !== '0000000') {
             throw new ForbiddenException('관리자만 상벌점 기록을 수정할 수 있습니다.');
         }
 
@@ -77,7 +77,7 @@ export class ScoreRecordService {
     }
 
     async delete(myId: string, id: number): Promise<boolean> {
-        if(!myId && myId !== '0000000') {
+        if(!myId || myId !== '0000000') {
             throw new ForbiddenException('관리자만 상벌점 기록을 삭제할 수 있습니다.');
         }
 
