@@ -15,11 +15,11 @@ export class Notice {
     student: Student;
 
     @ApiProperty({ description: '제목' })
-    @Column()
+    @Column({ type: 'text' })
     title: string;
 
     @ApiProperty({ description: '내용' })
-    @Column()
+    @Column({ type: 'text' })
     detail: string;
 
     @ApiProperty({ description: '생성일자' })
