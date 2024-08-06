@@ -1,73 +1,40 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+![header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=10&height=200&text=HausungDomitory-Backend&fontSize=50&animation=twinkling&fontAlign=58&fontAlignY=36)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# 1. 정의
+### 한성대학교 기숙사 애플리케이션(iOS)
+기숙사를 이용하는 학생들의 편의를 위한 애플리케이션인 "한성대학교 생활관"에서 필요한 기능을 구현한 API 백엔드 서버이다. </br>
+현재 한성대학교 기숙사 사이트는 웹 페이지 상으로만 외박 신청, 공지사항, 기숙사의 현황 등을 확인할 수 있어서 겪는 불편함이 크다고 생각한다. </br>
+이를 해소하기 위하여 TypeScript와 Swift를 이용한 한성대학교 기숙사 애플리케이션을 만들었고, </br>
+NestJS 프레임워크에서 RestAPI 통신 방법을 사용하여 개발 완료 후 Docker를 통해 패키징하였다. </br>
+현재, AWS EC2 인스턴스를 통해 배포 중이다.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# 2. 설치
+### 2-1. 환경변수 설정
 
-## Description
+### 2-2. 프로젝트 파일 설치
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+# 3. 기술 스택
 
-## Installation
+-개발 환경 : Windows, MacOS </br>
+-개발 언어 : TypeScript, Swift <br>
+-개발 도구 : VSCode, MySQL, Docker, RestAPI, XCode </br>
+-프레임워크 : NestJS, </br>
 
-```bash
-$ yarn install
-```
+# 4. Database 구조 (ERD)
 
-## Running the app
+# 5. Realease Link
 
-```bash
-# development
-$ yarn run start
+# 6. 배포
 
-# watch mode
-$ yarn run start:dev
+# 7. API 설명
+### 7-1. 사용자 관리
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가. JWT 적용   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사용자의 인증과 인가를 위해 JWT 기술 적용한다.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JWT 토큰에 사용자의 ID 값을 넣어서 사용자의 회원정보 일치 여부를 확인한다. </br></br>
+__<사용 예시 화면>__ 
 
-# production mode
-$ yarn run start:prod
-```
+### 7-2. 외박 신청
 
-## Test
+### 7-3. 상/벌점
 
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+### 7-4. 공지사항
