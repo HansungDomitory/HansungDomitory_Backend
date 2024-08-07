@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=10&height=200&text=HausungDomitory-Backend&fontSize=50&animation=twinkling&fontAlign=58&fontAlignY=36)
+![header](https://capsule-render.vercel.app/api?type=waving&color=auto&customColorList=10&height=200&text=HausungDomitory-Backend&fontSize=50&animation=twinkling&fontAlign=58&fontAlignY=36)
 
 # 1. 정의
 ### 한성대학교 기숙사 애플리케이션(iOS)
@@ -9,33 +9,29 @@ NestJS 프레임워크에서 RestAPI 통신 방법을 사용하여 개발 완료
 현재, AWS EC2 인스턴스를 통해 배포 중이다.
 
 # 2. 설치
-### 2-1. 환경변수 설정
-
-### 2-2. 프로젝트 파일 설치
+### 2-1. 프로젝트 파일 설치
+```bash
+git clone https://github.com/HansungDomitory/HansungDomitory_Backend.git
+```
+### 2-2. 필요 모듈 설치
+```bash
+yarn install
+```
+### 2-3. 프로젝트 실행
+```bash
+yarn start
+```
 
 # 3. 기술 스택
 
 -개발 환경 : Windows, MacOS </br>
 -개발 언어 : TypeScript, Swift <br>
--개발 도구 : VSCode, MySQL, Docker, RestAPI, XCode </br>
--프레임워크 : NestJS, </br>
+-개발 도구 : VSCode, MySQL, Docker, XCode </br>
+-프레임워크 : NestJS </br>
+-클라우드 서버 : Amazon Web Service
 
 # 4. Database 구조 (ERD)
-<iframe width="600" height="336" src="https://www.erdcloud.com/p/bxx5QiPqPuskeyPJQ" frameborder="0" allowfullscreen></iframe>
+![ProjectH](https://github.com/user-attachments/assets/a1c0d8eb-c84a-4489-b51a-b07800ce3b19)
 
 # 5. Realease Link
-
-# 6. 배포
-
-# 7. API 설명
-### 7-1. 사용자 관리
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가. JWT 적용   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사용자의 인증과 인가를 위해 JWT 기술 적용한다.   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JWT 토큰에 사용자의 ID 값을 넣어서 사용자의 회원정보 일치 여부를 확인한다. </br></br>
-__<사용 예시 화면>__ 
-
-### 7-2. 외박 신청
-
-### 7-3. 상/벌점
-
-### 7-4. 공지사항
+[Backend API 정의서(Swagger)](http://3.145.59.24:3000/api-docs)
