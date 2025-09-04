@@ -26,7 +26,7 @@ yarn start
 
 -개발 환경 : Windows, MacOS </br>
 -개발 언어 : TypeScript, Swift <br>
--개발 도구 : VSCode, MySQL, Docker, XCode </br>
+-개발 도구 : VSCode, MySQL, XCode </br>
 -프레임워크 : NestJS </br>
 -클라우드 서버 : Amazon Web Service
 
